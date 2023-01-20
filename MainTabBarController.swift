@@ -30,8 +30,10 @@ class MainTabBarController: UITabBarController {
     
     
     func setupViewController() {
+        let firstViewModel = FirstViewModel()
+        
         viewControllers = [
-            createNavigationController(for: FirstViewController(), title: NSLocalizedString("Homepage", comment: ""), image: UIImage(systemName: "house")!),
+            createNavigationController(for: FirstViewController(viewModel: firstViewModel), title: NSLocalizedString("Homepage", comment: ""), image: UIImage(systemName: "house")!),
             createNavigationController(for: SecondViewController(), title: NSLocalizedString("Second", comment: ""), image: UIImage(systemName: "house")!),
             createNavigationController(for: ThirdViewController(), title: NSLocalizedString("Third", comment: ""), image: UIImage(systemName: "house")!)
         ]
@@ -41,4 +43,3 @@ class MainTabBarController: UITabBarController {
 
 
 }
-

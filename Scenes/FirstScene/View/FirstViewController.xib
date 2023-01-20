@@ -8,9 +8,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SecondViewController" customModule="Simpra_Final_Project" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FirstViewController" customModule="Simpra_Final_Project" customModuleProvider="target">
             <connections>
-                <outlet property="collectionView" destination="fYX-kw-gjf" id="Jh1-c5-aYl"/>
+                <outlet property="collectionView" destination="88E-GC-lj3" id="aab-re-b8x"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,11 +19,10 @@
             <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="fYX-kw-gjf">
-                    <rect key="frame" x="16" y="74" width="346" height="715"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qcc-6q-jef">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="88E-GC-lj3">
+                    <rect key="frame" x="0.0" y="47" width="390" height="763"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HN5-Qy-c3T">
                         <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -33,7 +32,13 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="-155.38461538461539" y="-12.085308056872037"/>
+            <constraints>
+                <constraint firstItem="88E-GC-lj3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="WXI-Q1-LP2"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="88E-GC-lj3" secondAttribute="trailing" id="YKr-ZB-gWv"/>
+                <constraint firstItem="88E-GC-lj3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ZDq-yw-zsn"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="88E-GC-lj3" secondAttribute="bottom" id="rAW-YU-A4s"/>
+            </constraints>
+            <point key="canvasLocation" x="101.53846153846153" y="20.616113744075829"/>
         </view>
     </objects>
     <resources>
