@@ -12,6 +12,8 @@ public var gamesProvider = MoyaProvider<APIRequest>()
 
 public enum APIRequest {
     case games
+    case search(query: String)
+    case screenshots(id: String)
 }
 
 extension APIRequest: TargetType {
@@ -26,6 +28,10 @@ extension APIRequest: TargetType {
         switch self {
         case .games:
             return "/games"
+        case .search(let query):
+            return "/games\(query)"
+        case .screenshots(let id):
+            return "/games\(id)/screenshots"
         }
     }
     
@@ -33,10 +39,21 @@ extension APIRequest: TargetType {
         .get
     }
     
+    
     public var task: Moya.Task {
+        var params: [String: Any] = [:]
+        params["key"] = "3c76fa40925b4028baa37a40687eba2c"
+        params["page_size"] = 100
         switch self {
-        case .games:
-            let params = ["key" : "3c76fa40925b4028baa37a40687eba2c"] as [String : Any]
+        case .search(let query):
+            params["search"] = query
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
+        case .screenshots(let id):
+            params["games_pk"] = id
+            params["key"] = "3c76fa40925b4028baa37a40687eba2c"
+            params["page_size"] = 100
+            return .requestParameters(parameters: params, encoding: URLEncoding.default)
+        default:
             return .requestParameters(parameters: params, encoding: URLEncoding.default)
         }
     }

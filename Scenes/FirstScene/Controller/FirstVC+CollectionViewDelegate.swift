@@ -7,8 +7,25 @@
 
 import UIKit
 
-extension FirstViewController: UICollectionViewDelegate {
-    
+extension FirstViewController: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+        
+//        guard let gameId = viewModel.itemAtIndexPath(indexPath)?.id else { return }
+//        let strgame = String(gameId)
+        
+        guard let itemAtIndex = viewModel.itemAtIndexPath(indexPath) else { return }
+        
+        let detailPage = FirstDetailViewController()
+        detailPage.item = itemAtIndex
+        
+//        viewModel.fetchScreenshots(id: strgame)
+//        print(viewModel.screenshotList.count)
+        
+        present(detailPage,animated: true)
+        
+    }
 }
 
 extension FirstViewController: UICollectionViewDelegateFlowLayout {
