@@ -15,5 +15,11 @@ class FirstDetailCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    static let identifier = "FirstDetailCollectionViewCell"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "FirstDetailCollectionViewCell", bundle: nil)
+    }
 
 }

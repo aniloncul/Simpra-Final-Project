@@ -10,78 +10,65 @@ import UIKit
 class SecondViewController: UIViewController {
     
     
-    private var gamesList: [Game] = []
-
-    @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var tableView: UITableView!
+    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .blue
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        
-        collectionView.register(UINib(nibName:"SecondCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "SecondCollectionViewCell")
-        
-        fetchTeams()
-
-
-        
+        setupView()
+          
     }
     
-    private func fetchTeams() {
-        
-        guard let url = URL(string: "https://api.rawg.io/api/games?key=3c76fa40925b4028baa37a40687eba2c") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-            
-        var task = URLSession.shared.dataTask(with: request as URLRequest) { [weak self] data, response, error in
-            if error != nil {
-                return
-            }
-            
-            if let data = data {
-                do {
-                    let games = try! JSONDecoder().decode(GamesResponse.self, from: data)
-                    self!.gamesList = games.results!
-                    DispatchQueue.main.async {
-                        self?.collectionView.reloadData()
-                    }
-                } catch {
-                    print("Decoding")
-                }
-                
-            }
-        }
-                
-            
-            task.resume()
-        }
+    private func setupView() {
+        self.navigationItem.title = "Favorites"
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(SecondTableViewCell.nib(), forCellReuseIdentifier: SecondTableViewCell.identifier)
+        //table.register(SecondTableViewCell.nib(), forCellWithReuseIdentifier: SecondTableViewCell.identifier)
+
+    }
+     
 
 
 }
 
 //MARK: - TableView Delegate
 
-extension SecondViewController: UICollectionViewDelegate {
-    
+extension SecondViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("basıldı")
+    }
 }
 
 //MARK: - TableView DataSource
 
-extension SecondViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        gamesList.count
+extension SecondViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecondCollectionViewCell", for: indexPath) as? SecondCollectionViewCell else {fatalError("ProductsCollectionViewCell not found")}
-        cell.label.text = gamesList[indexPath.row].name
-        
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SecondTableViewCell", for: indexPath) as? SecondTableViewCell else {fatalError("ProductsCollectionViewCell not found")}
+        cell.nameLabel.text = "memo"
+        cell.ratingLabel.text = "memdf"
+        cell.releasedDatelabel.text = "memdf"
         
         return cell
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        0
+//    }
+//
+//    func collectionView(_ collectionView: UITableView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SecondCollectionViewCell", for: indexPath) as? SecondCollectionViewCell else {fatalError("ProductsCollectionViewCell not found")}
+//        cell.label.text = gamesList[indexPath.row].name
+//
+//
+//
+//        return cell
+//    }
 }
     

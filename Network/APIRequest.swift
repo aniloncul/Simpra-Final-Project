@@ -10,57 +10,81 @@ import Moya
 
 public var gamesProvider = MoyaProvider<APIRequest>()
 
+import Foundation
+import Moya
+
 public enum APIRequest {
     case games
-    case search(query: String)
-    case screenshots(id: String)
+    case getGameDetail(id: Int)
+    case getGameListByDeveloperID(id: Int)
+    case getGameDeveloperList
 }
 
 extension APIRequest: TargetType {
     public var baseURL: URL {
-        guard let url = URL(string: "https://api.rawg.io/api") else {
-            fatalError("Base url not found")
-        }
-        return url
+        return URL(string: "https://api.rawg.io/")!
     }
     
     public var path: String {
         switch self {
         case .games:
-            return "/games"
-        case .search(let query):
-            return "/games\(query)"
-        case .screenshots(let id):
-            return "/games\(id)/screenshots"
+            return "api/games"
+        case let .getGameDetail(id):
+            return "api/games/\(id)"
+        case .getGameListByDeveloperID:
+            return "api/games"
+        case .getGameDeveloperList:
+            return "api/developers"
         }
     }
     
-    public var method: Moya.Method {
-        .get
+    public var parameters: [String : Any]? {
+        switch self {
+        case .getGameDetail:
+            return [
+                "key": "3c76fa40925b4028baa37a40687eba2c"
+            ]
+        case let .getGameListByDeveloperID(id):
+            return [
+                "key": "3c76fa40925b4028baa37a40687eba2c",
+                "developers": id,
+                "page_size": 20
+            ]
+        case .getGameDeveloperList:
+            return [
+                "key": "3c76fa40925b4028baa37a40687eba2c",
+                "page_size": 100
+            ]
+        case .games:
+            return [
+                "key": "3c76fa40925b4028baa37a40687eba2c"
+            ]
+        }
     }
     
+    public var parameterEncoding: ParameterEncoding {
+        return URLEncoding.default
+    }
     
-    public var task: Moya.Task {
-        var params: [String: Any] = [:]
-        params["key"] = "3c76fa40925b4028baa37a40687eba2c"
-        params["page_size"] = 100
+    public var method: Moya.Method {
         switch self {
-        case .search(let query):
-            params["search"] = query
-            return .requestParameters(parameters: params, encoding: URLEncoding.default)
-        case .screenshots(let id):
-            params["games_pk"] = id
-            params["key"] = "3c76fa40925b4028baa37a40687eba2c"
-            params["page_size"] = 100
-            return .requestParameters(parameters: params, encoding: URLEncoding.default)
         default:
-            return .requestParameters(parameters: params, encoding: URLEncoding.default)
+            return .get
         }
     }
     
     public var headers: [String : String]? {
-        nil
+        switch self {
+        default:
+            return ["Content-Type": "application/json"]
+        }
     }
     
+    public var task: Task {
+        return .requestParameters(parameters: parameters ?? [:], encoding: parameterEncoding)
+    }
     
+    public var sampleData: Data {
+        return "{\"data\": 123}".data(using: .utf8)!
+    }
 }

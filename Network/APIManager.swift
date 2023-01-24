@@ -15,28 +15,32 @@ import Moya
 
 class APIManager {
     
-    public var gamesProvider = MoyaProvider<APIRequest>()
+//    public var gamesProvider = MoyaProvider<APIRequest>(plugins: [NetworkLoggerPlugin()])
     
-    func fetchGames(completion: @escaping (Result<GamesResponse, Error>) -> ()) {
-        request(target: .games, completion: completion)
-        }
-    
-    func searchGame(query: String, completion: @escaping (Result<GamesResponse, Error>) -> ()) {
-        request(target: .search(query: query), completion: completion)
-        }
-    
-    func fetchGameScreenshots(id: String, completion: @escaping (Result<ScreenshotResponse, Error>) -> ()) {
-        request(target: .screenshots(id: id), completion: completion)
-    }
+//    func fetchGames(completion: @escaping (Result<GamesResponse, Error>) -> ()) {
+//        request(target: .games, completion: completion)
+//        }
+//    
+//    func fetchGameDetails(gameId: Int, completion: @escaping (Result<GameDetail, Error>) -> ()) {
+//        request(target: .detail(gameId: gameId), completion: completion)
+//        }
+//    
+//    func searchGame(query: String, completion: @escaping (Result<GamesResponse, Error>) -> ()) {
+//        request(target: .search(query: query), completion: completion)
+//        }
+//    
+//    func fetchGameScreenshots(id: String, completion: @escaping (Result<ScreenshotResponse, Error>) -> ()) {
+//        request(target: .screenshots(id: id), completion: completion)
+//    }
 
     
     
     
 }
 
-private extension APIManager {
+extension APIManager {
     
-    private func request<T: Decodable>(target: APIRequest, completion: @escaping(Result<T, Error>) -> ()) {
+    func request<T: Decodable>(target: APIRequest, completion: @escaping(Result<T, Error>) -> ()) {
         gamesProvider.request(target) { result in
             switch result {
             case let .success(response):

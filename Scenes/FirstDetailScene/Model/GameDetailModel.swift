@@ -1,20 +1,24 @@
 //
-//  Games.swift
+//  GamesDetailResponse.swift
 //  Simpra-Final-Project
 //
-//  Created by Anıl Öncül on 18.01.2023.
+//  Created by Anıl Öncül on 21.01.2023.
 //
 
 import Foundation
 
-struct GamesResponse: Decodable {
-    let results: [Game]?
-    
+struct ScreenshotResponse: Decodable {
+    let results: [ShortScreenshot]?
+}
+
+struct ShortScreenshot: Decodable {
+    let image: String?
     
 }
 
-struct Game: Decodable {
-    var gameId: Int
+// MARK: - Game Detail
+struct GameDetail: Decodable {
+    var gameId: Int?
     var name: String?
     var released: String?
     var backgroundImage: String?
@@ -22,10 +26,10 @@ struct Game: Decodable {
     var metacritic: Int?
     var suggestionsCount: Int?
     var reviewsCount: Int?
+    var descriptionRaw: String?
     var parentPlatforms: [ParentPlatform]?
     var genres: [Genre]?
-    var shortScreenshots: [ShortScreenshot]?
-    
+    var publishers: [Publisher]?
     enum CodingKeys: String, CodingKey {
         case gameId = "id"
         case name, released
@@ -33,9 +37,15 @@ struct Game: Decodable {
         case rating, metacritic
         case suggestionsCount = "suggestions_count"
         case reviewsCount = "reviews_count"
+        case descriptionRaw = "description_raw"
         case parentPlatforms = "parent_platforms"
         case genres
-        case shortScreenshots = "short_screenshots"
+        case publishers
+    }
+    
+    var publishersString: String {
+        guard let publishers = publishers else { return "No Publisher Info" }
+        return publishers.map { $0.name }.joined(separator: ", ")
     }
     
     var releaseFormattedDate: String {
@@ -79,7 +89,10 @@ struct Game: Decodable {
         }
     }
     
-  
+//    var backgroundUrl: URL? {
+//        guard let backgroundImage = backgroundImage else { return AssetExtractor.createLocalUrl(forImageNamed: "emptyImage")}
+//        return URL(string: backgroundImage)
+//    }
 
     var genreText: String? {
         guard let genres = genres else { return "" }
@@ -94,4 +107,25 @@ struct Game: Decodable {
     }
 }
 
+// MARK: - Genre
+struct Genre: Decodable {
+    let id: Int
+    let name: String
+}
 
+// MARK: - ParentPlatform
+struct ParentPlatform: Decodable {
+    let platform: Platform
+}
+
+// MARK: - Platform
+struct Platform: Decodable {
+    let id: Int
+    let name: String
+}
+
+// MARK: - Publisher
+struct Publisher: Decodable {
+    var id: Int
+    var name: String
+}

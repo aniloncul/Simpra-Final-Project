@@ -23,7 +23,7 @@ protocol FirstViewModelProtocol {
     func itemAtIndexPath(_ indexPath: IndexPath) -> Game?
     var detailNumberOfRows: Int { get }
     func detailPhotoForIndexPath(_ indexPath: IndexPath) -> String?
-    var screenshotList: [Screenshot] { get }
+    var screenshotList: [ShortScreenshot] { get }
 }
 
 // MARK: - Change Handler Enum
@@ -45,7 +45,7 @@ final class FirstViewModel: FirstViewModelProtocol {
         }
     }
     
-    var screenshotList = [Screenshot]()
+    var screenshotList = [ShortScreenshot]()
     
     //MARK: - CollectionView DataSource Parameters
     var numberOfRows: Int {
@@ -58,7 +58,7 @@ final class FirstViewModel: FirstViewModelProtocol {
     }
     
     func photoForIndexPath(_ indexPath: IndexPath) -> String? {
-        gamesList[indexPath.row].background_image
+        gamesList[indexPath.row].backgroundImage
     }
     
     func itemAtIndexPath(_ indexPath: IndexPath) -> Game? {
@@ -100,23 +100,23 @@ final class FirstViewModel: FirstViewModelProtocol {
     
     //MARK: - Fetching Function
     func fetchScreenshots(id: String) {
-        gamesProvider.request(.screenshots(id: id)) { result in
-            switch result {
-            case .failure(let error):
-                self.delegate?.didErrorOccured(error)
-                print(String(describing: error))
-            case .success(let response):
-                do {
-                    let screenshots = try! JSONDecoder().decode(ScreenshotResponse.self, from: response.data)
-                    self.screenshotList = screenshots.results!
-                    
-                    
-                } catch {
-                    self.delegate?.didErrorOccured(error)
-                }
-
-            }
-        }
+//        gamesProvider.request(.screenshots(id: id)) { result in
+//            switch result {
+//            case .failure(let error):
+//                self.delegate?.didErrorOccured(error)
+//                print(String(describing: error))
+//            case .success(let response):
+//                do {
+//                    let screenshots = try! JSONDecoder().decode(ScreenshotResponse.self, from: response.data)
+//                    self.screenshotList = screenshots.results!
+//                    
+//                    
+//                } catch {
+//                    self.delegate?.didErrorOccured(error)
+//                }
+//
+//            }
+//        }
     }
     
     
